@@ -14,49 +14,68 @@ game.stage.backgroundColor = "#ffffff";
 
 this.blocks = []
 
-this.a = [{x: 200, y: 200},{x: 149, y: 200}];
+this.a = [{x: 200, y: 200, direction: 'right'},{x: 149, y: 200, direction: 'right'}];
 this.a.forEach((element, i) => {
 	this.blocks[i] = this.add.sprite(element.x, element.y, 'kvadrat');
 	this.game.physics.arcade.enable(this.blocks[i])
+	this.blocks[i].property = element.direction
 })
 
-
-
-// this.player = this.add.sprite(200, 200, 'kvadrat');
-// this.player1 = this.add.sprite(149, 200, 'kvadrat');
-// this.game.physics.arcade.enable(this.player) 
-// this.game.physics.arcade.enable(this.player1)
-
-this.key = 0;
-this.delay = 2000;
+this.delay = 1000;
 }, 
 update: function() { 
-
-// if(this.cursors.up.isDown) {
-// 	if(this.key = 0) {
-// 		this.player.body.velocity.x = 0
-// 		this.player1.body.velocity.x = 0
-// 		this.player.body.velocity.y = -this.RUNNING_SPEED
-// 		this.player1.body.velocity.y = -this.RUNNING_SPEED
-// 	}
-// 	this.key = 1;
-// }
-// if(this.cursors.up.isUp) {
-// 	this.key = 0;
-// }
-
+	this.blocks.forEach((element) => {
+	if(this.cursors.up.isDown) {
+		element.property = "up"
+	}
+		if(this.cursors.down.isDown) {
+		element.property = "down"
+	}
+		if(this.cursors.left.isDown) {
+		element.property = "left"
+	}
+		if(this.cursors.right.isDown) {
+		element.property = "right"
+	}
+})
 if(game.time.now > this.delay) {
-// 	this.player.body.velocity.y = 0
-// this.player1.body.velocity.y = 0
-// this.player.body.velocity.x = this.RUNNING_SPEED
-// this.player1.body.velocity.x = this.RUNNING_SPEED
 this.blocks.forEach((element) => {
 
-	// debugger
-	element.body.position.x += this.RUNNING_SPEED;
+	if(element.property === "right") {
+		element.body.position.x += this.RUNNING_SPEED
+		element.body.position.y += 0
+	} else if(element.property === "left"){
+		element.body.position.x += -this.RUNNING_SPEED
+		element.body.position.y += 0
+	} else if(element.property === "up"){
+		element.body.position.x += 0
+		element.body.position.y += -this.RUNNING_SPEED
+	} else if(element.property === "down"){
+		element.body.position.x += 0
+		element.body.position.y += this.RUNNING_SPEED
+	} 
+
+	// 	if(this.cursors.down.isDown) {
+
+	// 	element.body.position.x += 0
+	// 	element.body.position.y += this.RUNNING_SPEED
+	// }
+	// 	if(this.cursors.right.isDown) {
+
+	// 	element.body.position.x += this.RUNNING_SPEED
+	// 	element.body.position.y += 0
+	// }
+	// 	if(this.cursors.left.isDown) {
+
+	// 	element.body.position.x += -this.RUNNING_SPEED
+	// 	element.body.position.y += 0
+	// }
+	// element.body.position.x += this.RUNNING_SPEED;
+
 })
-	console.log('azazaz')
-	this.delay += 2000;
+
+	
+	this.delay += 1000;
 }
 }, 
 
